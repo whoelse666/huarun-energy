@@ -37,17 +37,18 @@
                 <el-tab-pane v-for="item in tabs" :key="item" :label="item" :name="item">
                 </el-tab-pane>
               </el-tabs>
-
-              <span>设备类型：</span>
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
+              <template v-if="activeName === '标准方案'">
+                <span>设备类型：</span>
+                <el-select v-model="value" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </template>
             </div>
             <div id="searchInput">
               <el-input
@@ -60,24 +61,31 @@
             </div>
           </div>
 
-          <div id="contentBox">
-            <el-button
-              class="add-btn"
-              type="primary"
-              icon="el-icon-document-add"
-              @click="dialogFormVisible = true"
-              >新建标准</el-button
-            >
-            <div class="card-list">
-              <PointInspectionStandardCard
-                :data="cardList"
-                title="注塑机巡检标准"
-                v-for="item in 7"
-                :key="item"
+          <template v-if="activeName === '标准方案'">
+            <div id="contentBox">
+              <el-button
+                class="add-btn"
+                type="primary"
+                icon="el-icon-document-add"
+                @click="dialogFormVisible = true"
+                >新建标准</el-button
               >
-              </PointInspectionStandardCard>
+              <div class="card-list">
+                <PointInspectionStandardCard
+                  :data="cardList"
+                  :title="'注塑机巡检标准'+(index+1)"
+                  v-for="(item,index) in 7"
+                  :key="item"
+                >
+                </PointInspectionStandardCard>
+              </div>
             </div>
-          </div>
+          </template>
+          <template v-if="activeName === '设备分组'">
+            <div id="contentBox">
+              <EquipmentType />
+            </div>
+          </template>
         </el-main>
       </el-container>
     </el-container>
@@ -170,10 +178,12 @@
 
 <script>
 import PointInspectionStandardCard from './pointInspectionStandardCard.vue';
+import EquipmentType from './equipmentType.vue';
 export default {
   name: 'PointInspectionStandard',
   components: {
     PointInspectionStandardCard,
+    EquipmentType,
   },
   data() {
     return {
@@ -260,16 +270,7 @@ export default {
         remark: [{ required: false, message: '请输入备注', trigger: 'blur' }],
       },
       formLabelWidth: '110px',
-      tableData: [
-        // {
-        //   id: 1,
-        //   name: '主机检查1',
-        //   check: '滑动屏幕',
-        //   lowerBound: '50',
-        //   upperLimit: '50',
-        //   remark: '上海市普陀区金沙江路 1518 弄',
-        // },
-      ],
+      tableData: [],
     };
   },
   methods: {

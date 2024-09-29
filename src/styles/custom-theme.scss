@@ -1,0 +1,65 @@
+//element组件主题色
+$--color-primary: #4389FF;
+$--color-text-primary:#fff;
+$--color-text-regular: #fff;
+
+//menu菜单字体颜色
+$--menu-item-font-color: #fff;
+$--menu-background-color: #fff;
+
+//表格thead字体颜色
+$--table-font-color: #fff !important;
+$--table-header-font-color: #fff;
+//表格thead背景颜色
+$--table-header-background-color: #003e86 !important;
+
+$--table-row-hover-background-color: #003e86;
+
+$--table-border: none;
+
+$--pagination-font-color: #fff;
+
+$--pagination-button-color: #fff;
+$--pagination-background-color:transparent;
+
+/*********input输入组件************/
+$--input-background-color: transparent;
+$--input-border: 1px solid #709cd5;
+$--input-disabled-fill: #4A6689!default;
+$--input-disabled-border: 1px solid #709cd5;
+
+/*********button组件************/
+$--button-default-background-color: transparent;
+$--button-default-border-color: 1px solid #709cd5;
+$--button-disabled-background-color: transparent;
+/*********Select组件************/
+$--select-dropdown-background: #0c316b;
+$--select-dropdown-border: 1px solid #709cd5;
+$--select-option-hover-background: rgba(43, 142, 255, 0.3);
+$--select-option-selected-font-color:#fff;
+
+$--popover-border-color:1px solid #709cd5;
+
+$--popover-background-color: #0c316b;
+
+$--messagebox-title-color:#fff;
+
+$--datepicker-border-color:1px solid #709cd5;
+$--datepicker-inner-border-color:1px solid #709cd5;
+$--border-color-light:1px solid #709cd5;
+
+$--checkbox-checked-background-color:transparent;
+$--checkbox-background-color:transparent;
+$--checkbox-disabled-input-fill:#0c2a58;
+$--checkbox-disabled-border-color:#1c355d;
+
+$--tree-node-hover-background-color:rgba(43, 142, 255, 0.3);
+
+
+
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import '~element-ui/packages/theme-chalk/src/index.scss';
+
+

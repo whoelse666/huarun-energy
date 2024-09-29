@@ -1,0 +1,8 @@
+//覆盖级联选择样式
+
+.el-cascader__dropdown{
+    background: #0c316b;
+}
+.el-cascader-node:not(.is-disabled):hover, .el-cascader-node:not(.is-disabled):focus{
+    background-color: rgba(43, 142, 255, 0.3);
+}

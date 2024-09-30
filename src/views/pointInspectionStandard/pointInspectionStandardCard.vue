@@ -22,8 +22,23 @@
       </div>
     </div>
     <div class="footer">
-      <el-button type="primary" plain size="small" @click="onSearch">编辑</el-button>
-      <el-button type="danger" plain size="small" @click="onReset">删除</el-button>
+      <el-button
+        style="margin-right: 10px"
+        type="primary"
+        plain
+        size="small"
+        @click="handleEdit"
+        >编辑</el-button
+      >
+      <el-popconfirm
+        title="确定删除吗？"
+        icon="el-icon-info"
+        icon-color="red"
+        @confirm="handleDelete(item)"
+        @cancel="handleCancel(item)"
+      >
+        <el-button slot="reference" type="danger" plain size="small">删除</el-button>
+      </el-popconfirm>
     </div>
   </div>
 </template>
@@ -42,13 +57,20 @@ export default {
     },
   },
   methods: {
-    // 搜索
-    onSearch() {
-      console.log('onSearch');
+    // 编辑
+    handleEdit() {
+      console.log('编辑');
     },
-    // 重置搜索框
-    onReset() {
-      this.searchName = '';
+    // 删除
+    handleDelete(item) {
+       this.$message({
+        message: '删除成功',
+        type: 'success',
+      });
+    },
+    // 取消删除
+    handleCancel() {
+      console.log('取消删除');
     },
   },
 };
@@ -56,8 +78,8 @@ export default {
 
 <style lang="scss" scoped>
 #pointInspectionStandardCard {
-  width:32%;
-  min-width:260px;
+  width: 32%;
+  min-width: 260px;
   height: 360px;
   padding: 20px;
   box-sizing: border-box;

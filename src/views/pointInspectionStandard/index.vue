@@ -39,7 +39,7 @@
               </el-tabs>
               <template v-if="activeName === '标准方案'">
                 <span>设备类型：</span>
-                <el-select v-model="value" placeholder="请选择">
+                <el-select v-model="typeValue" placeholder="请选择">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -73,8 +73,8 @@
               <div class="card-list">
                 <PointInspectionStandardCard
                   :data="cardList"
-                  :title="'注塑机巡检标准'+(index+1)"
-                  v-for="(item,index) in 7"
+                  :title="'注塑机巡检标准' + (index + 1)"
+                  v-for="(item, index) in 7"
                   :key="item"
                 >
                 </PointInspectionStandardCard>
@@ -83,7 +83,7 @@
           </template>
           <template v-if="activeName === '设备分组'">
             <div id="contentBox">
-              <EquipmentType />
+              <EquipmentType :equipmentOptions="equipmentOptions" />
             </div>
           </template>
         </el-main>
@@ -103,16 +103,16 @@
               :label="item.label"
               :value="item.value"
               v-for="item in dates"
-              :key="item.id"
+              :key="item.value"
             >
             </el-option>
           </el-select>
-          <el-select v-model="form.frequency2" placeholder="">
+          <el-select v-model="form.frequency2">
             <el-option
               :label="item.label"
               :value="item.value"
               v-for="item in times"
-              :key="item.id"
+              :key="item.value"
             >
             </el-option>
           </el-select>
@@ -187,7 +187,22 @@ export default {
   },
   data() {
     return {
+      typeValue: '',
       tabs: ['标准方案', '设备分组'],
+      equipmentOptions: [
+        {
+          label: '设备1',
+          value: 1,
+        },
+        {
+          label: '设备2',
+          value: 2,
+        },
+        {
+          label: '设备3',
+          value: 3,
+        },
+      ],
 
       cardList: [
         {
@@ -215,6 +230,14 @@ export default {
         {
           label: '全部',
           value: 'all',
+        },
+        {
+          label: '类型1',
+          value: 1,
+        },
+        {
+          label: '类型2',
+          value: 2,
         },
       ],
       dates: [
@@ -263,7 +286,7 @@ export default {
       rules: {
         name: [{ required: true, message: '请输入标准名称', trigger: 'blur' }],
         type: [{ required: true, message: '请输入适用设备类型', trigger: 'blur' }],
-        project: [{ required: true, message: '请输入适用设备类型', trigger: 'blur' }],
+        // project: [{ required: true, message: '请输入适用设备类型', trigger: 'blur' }],
         timeliness: [{ required: false, message: '请输入任务完成时效', trigger: 'blur' }],
         frequency1: [{ required: true, message: '检查频率', trigger: 'change' }],
         frequency2: [{ required: true, message: '检查频率', trigger: 'change' }],
@@ -286,7 +309,6 @@ export default {
     onReset() {
       this.searchName = '';
     },
-
     // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -302,6 +324,7 @@ export default {
         upperLimit: '50',
         remark: '上海市普陀区金沙江路 1518 弄',
       });
+      this.form.project = this.form.project + ',' + (this.tableData.length + 1);
     },
 
     // 表单取消
@@ -310,12 +333,15 @@ export default {
       this.resetForm(formName);
     },
     // 表单提交
-
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$message({
+            message: '提交成功',
+            type: 'success',
+          });
           this.dialogFormVisible = false;
+          this.resetForm('ruleForm');
         } else {
           console.log('error submit!!');
           return false;

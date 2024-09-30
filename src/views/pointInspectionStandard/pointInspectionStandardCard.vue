@@ -4,7 +4,7 @@
       <p class="title">
         {{ title }}
       </p>
-      <div v-for="item in data" :key="item">
+      <div v-for="item in data" :key="item.key">
         <template v-if="item.key === '检查项目'">
           <div class="project ellipsis">
             {{ item.key }}:
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="footer">
-      <el-button type="primary" plain  size="small" @click="onSearch">编辑</el-button>
+      <el-button type="primary" plain size="small" @click="onSearch">编辑</el-button>
       <el-button type="danger" plain size="small" @click="onReset">删除</el-button>
     </div>
   </div>
@@ -37,8 +37,18 @@ export default {
       default: '',
     },
     data: {
-      type: Object,
+      type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    // 搜索
+    onSearch() {
+      console.log('onSearch');
+    },
+    // 重置搜索框
+    onReset() {
+      this.searchName = '';
     },
   },
 };

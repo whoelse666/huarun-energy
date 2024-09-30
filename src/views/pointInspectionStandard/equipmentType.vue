@@ -43,39 +43,98 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="新增标准" :visible.sync="dialogFormVisible">
+      <el-form :model="form" :rules="rules" ref="ruleForm">
+        <el-form-item prop="name" label="分组名称" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="equipment" label="分组设备" :label-width="formLabelWidth">
+          <el-select
+            @change="handleSelectChange"
+            v-model="form.equipment"
+            placeholder="请选择"
+            clearable
+            multiple
+          >
+            <el-option
+              v-for="item in equipmentOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="" :label-width="formLabelWidth">
+          <div id="selected-tag">
+            <el-tag v-for="tag in tags" :key="tag.value">
+              {{ tag.label }}
+            </el-tag>
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="onCancel('ruleForm')">取消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
   name: 'equipmentType',
+  props: {
+    equipmentOptions: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
+      typeValue: '',
       dialogFormVisible: false,
+      tags: [],
       tableData: [
         {
           id: 1,
           name: 'A线点巡检设备组1',
           count: 9,
-          equipment: '空压机1#、空压机2#',
+          equipment: '空压机1#,空压机2#',
         },
         {
           id: 2,
           name: 'A线点巡检设备组2',
           count: 9,
-          equipment: '空压机1#、空压机2#',
+          equipment: '空压机1#,空压机2#',
         },
         {
           id: 3,
           name: 'A线点巡检设备组3',
           count: 9,
-          equipment: '空压机1#、空压机2#',
+          equipment: '空压机1#,空压机2#',
         },
       ],
+      form: {
+        name: '',
+        equipment: '',
+        remark: '',
+      },
+      rules: {
+        name: [{ required: true, message: '请输入分组名称', trigger: 'blur' }],
+        equipment: [{ required: true, message: '请输入分组设备', trigger: 'blur' }],
+      },
+      formLabelWidth: '110px',
     };
   },
 
   methods: {
+    //多选事件
+    handleSelectChange(val) {
+      this.tags = [...val];
+    },
+
     // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -87,7 +146,6 @@ export default {
         id: this.tableData.length + 1,
       });
     },
-
     // 表单取消
     onCancel(formName) {
       this.dialogFormVisible = false;
@@ -97,8 +155,20 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$message({
+            message: '提交成功',
+            type: 'success',
+          });
           this.dialogFormVisible = false;
+
+          this.tableData.push({
+            id: this.tableData.length + 1,
+            name: this.form.name,
+            count: this.tags.length,
+            equipment: this.tags.map((item) => item.label).join('#,') + '#',
+          });
+          this.resetForm('ruleForm');
+          this.tags = [];
         } else {
           console.log('error submit!!');
           return false;
@@ -113,6 +183,25 @@ export default {
 #equipmentType {
   .add-btn {
     margin: 10px 0;
+  }
+  #selected-tag {
+    padding: 10px;
+    width: 100%;
+    height: 190px;
+    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    background: #132e58;
+    border-radius: 4px;
+  }
+
+  :deep(.el-table__body tr.hover-row > td.el-table__cell) {
+    background-color: #0c316b !important;
+  }
+
+  :deep(.el-select) {
+    width: 100%;
   }
 }
 </style>

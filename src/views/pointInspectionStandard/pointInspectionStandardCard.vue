@@ -56,12 +56,14 @@ export default {
 
 <style lang="scss" scoped>
 #pointInspectionStandardCard {
-  width: 360px;
+  width:32%;
+  min-width:260px;
   height: 360px;
   padding: 20px;
   box-sizing: border-box;
   border: 1px dashed #ccc;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   justify-content: space-between;
   background: url(../../assets/cardbg.png) no-repeat;

@@ -184,6 +184,7 @@ export default {
   components: {
     PointInspectionStandardCard,
     EquipmentType,
+    
   },
   data() {
     return {

@@ -31,15 +31,29 @@
       <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
           <el-button
-            @click="handleClick(scope.row)"
+            @click="handleEdit(scope.row)"
             type="text"
             size="small"
             icon="el-icon-edit"
             >编辑</el-button
           >
-          <el-button type="text" style="color: #ff985e" size="small" icon="el-icon-delete"
-            >删除</el-button
+
+          <el-popconfirm
+            title="确定删除吗？"
+            icon="el-icon-info"
+            icon-color="red"
+            @confirm="handleDelete(scope.row)"
+            @cancel="handleCancel(scope.row)"
           >
+            <el-button
+              slot="reference"
+              type="text"
+              style="color: #ff985e"
+              size="small"
+              icon="el-icon-delete"
+              >删除</el-button
+            >
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -85,6 +99,7 @@
 <script>
 export default {
   name: 'equipmentType',
+
   props: {
     equipmentOptions: {
       type: Array,
@@ -130,6 +145,22 @@ export default {
   },
 
   methods: {
+    //表格行编辑
+    handleEdit(row) {
+      console.log('row', row);
+    },
+    //表格行删除
+    handleDelete(row) {
+      this.tableData.splice(this.tableData.indexOf(row), 1);
+      this.$message({
+        message: '删除成功',
+        type: 'success',
+      });
+    },
+    //表格行取消删除
+    handleCancel(row) {
+      console.log('表格行取消删除');
+    },
     //多选事件
     handleSelectChange(val) {
       this.tags = [...val];
@@ -195,7 +226,11 @@ export default {
     background: #132e58;
     border-radius: 4px;
   }
-
+  .pagination-container {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
   :deep(.el-table__body tr.hover-row > td.el-table__cell) {
     background-color: #0c316b !important;
   }

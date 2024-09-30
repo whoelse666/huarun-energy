@@ -4,8 +4,6 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 
-
-
 const Home = () => import("@/App.vue")
 const PointInspectionStandard = () => import("@/views/pointInspectionStandard/index.vue")
 const router = new VueRouter({
@@ -13,16 +11,8 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      name: "Home",
-      component: Home,
-      children: [
-        {
-          path: "/pointInspectionStandard",
-          name: "PointInspectionStandard",
-          component: PointInspectionStandard
-        }
-
-      ]
+      name: "PointInspectionStandard",
+      component: PointInspectionStandard
     },
 
   ]

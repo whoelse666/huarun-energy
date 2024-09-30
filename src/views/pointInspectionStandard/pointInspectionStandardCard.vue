@@ -63,7 +63,6 @@ export default {
   box-sizing: border-box;
   border: 1px dashed #ccc;
   display: flex;
-  flex: 1 1 auto;
   flex-direction: column;
   justify-content: space-between;
   background: url(../../assets/cardbg.png) no-repeat;

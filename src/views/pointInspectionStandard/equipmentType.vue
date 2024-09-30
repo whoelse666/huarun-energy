@@ -231,6 +231,16 @@ export default {
     display: flex;
     justify-content: end;
   }
+
+  :deep(.el-select__tags-text) {
+    color: #409eff;
+  }
+  :deep(.el-tag.el-tag--info .el-tag__close) {
+    color: #ffffff;
+  }
+  :deep(.el-select .el-tag__close.el-icon-close) {
+    background-color: #409eff;
+  }
   :deep(.el-table__body tr.hover-row > td.el-table__cell) {
     background-color: #0c316b !important;
   }
